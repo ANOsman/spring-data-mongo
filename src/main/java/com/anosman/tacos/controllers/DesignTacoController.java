@@ -35,8 +35,7 @@ public class DesignTacoController {
         if(errors.hasErrors()) {
             return "design";
         }
-        TacoUDT tacoUDT = TacoUDTUtils.toTacoUDT(taco);
-        order.addTaco(tacoUDT);
+        order.addTaco(taco);
         log.info("Processing taco: {}", taco);
         return "redirect:/orders/current";
     }

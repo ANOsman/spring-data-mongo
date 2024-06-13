@@ -1,29 +1,24 @@
 package com.anosman.tacos;
 
-import com.datastax.oss.driver.api.core.uuid.Uuids;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.CreditCardNumber;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.awt.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Data
-@Table("orders")
+@Document(collection = "orders")
 public class TacoOrder implements Serializable {
 
-    @PrimaryKey
-    private UUID id = Uuids.timeBased();
+    @Id
+    private String id;
 
     private LocalDateTime placedAt = LocalDateTime.now();
 
@@ -50,9 +45,8 @@ public class TacoOrder implements Serializable {
 
     @Digits(integer = 3, fraction = 0, message = "Invalid CVV")
     private String ccCVV;
-    @Column("tacos")
-    private List<TacoUDT> tacos = new ArrayList<>();
-    public void addTaco(TacoUDT taco) {
+    private List<Taco> tacos = new ArrayList<>();
+    public void addTaco(Taco taco) {
         tacos.add(taco);
     }
 }

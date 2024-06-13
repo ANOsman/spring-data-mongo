@@ -43,4 +43,10 @@ public class OrderController {
         status.setComplete();
         return "redirect:/";
     }
+
+    @GetMapping("/all")
+    public String getAllOrders() {
+        List<TacoOrder> orders = (List<TacoOrder>) orderRepository.findAll();
+        return "redirect:/";
+    }
 }
